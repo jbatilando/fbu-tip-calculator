@@ -90,7 +90,13 @@
                             <outletCollection property="gestureRecognizers" destination="H9p-GJ-rHU" appends="YES" id="F2Q-Gt-vlZ"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Tips" id="FXc-JQ-bOY"/>
+                    <navigationItem key="navigationItem" title="Tips" id="FXc-JQ-bOY">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Ywo-q0-qsG">
+                            <connections>
+                                <segue destination="xXG-Rj-ixp" kind="show" id="COn-ib-reg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="billField" destination="5GZ-vn-EmN" id="vyB-yG-Bcq"/>
                         <outlet property="tipControl" destination="BmS-QF-hg9" id="fnq-9v-rhp"/>
@@ -106,6 +112,52 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1047.8260869565217" y="117.85714285714285"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="EqE-pb-8Ed">
+            <objects>
+                <viewController id="xXG-Rj-ixp" customClass="SettingsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hsx-0z-vsH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhf-Py-C1X">
+                                <rect key="frame" x="187" y="216" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="20%"/>
+                                <connections>
+                                    <action selector="didTapTwenty:" destination="xXG-Rj-ixp" eventType="touchUpInside" id="IhF-Qx-TYb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0x9-oj-F2m">
+                                <rect key="frame" x="187" y="279" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="22%"/>
+                                <connections>
+                                    <action selector="didTapTwentyTwo:" destination="xXG-Rj-ixp" eventType="touchUpInside" id="PYP-M1-7KI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1I-cC-A08">
+                                <rect key="frame" x="187" y="151" width="35" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="15%"/>
+                                <connections>
+                                    <action selector="didTapFifteen:" destination="xXG-Rj-ixp" eventType="touchUpInside" id="Atd-JU-q1h"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="TKQ-4X-CrW"/>
+                    </view>
+                    <connections>
+                        <outlet property="fifteenPercentButton" destination="B1I-cC-A08" id="Omf-s9-aqb"/>
+                        <outlet property="twentyPercentButton" destination="yhf-Py-C1X" id="Gcg-lW-tG9"/>
+                        <outlet property="twentyTwoPercentButton" destination="0x9-oj-F2m" id="hig-ce-JK2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hc8-i0-z0E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1747.826086956522" y="117.85714285714285"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="qsv-gZ-OMS">
