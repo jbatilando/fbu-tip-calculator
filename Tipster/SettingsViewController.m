@@ -20,6 +20,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _fifteenPercentButton.layer.cornerRadius = 50;
+    _fifteenPercentButton.layer.borderWidth = 1;
+    _fifteenPercentButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _twentyPercentButton.layer.cornerRadius = 50;
+    _twentyPercentButton.layer.borderWidth = 1;
+    _twentyPercentButton.layer.borderColor = [UIColor blackColor].CGColor;
+    _twentyTwoPercentButton.layer.cornerRadius = 50;
+    _twentyTwoPercentButton.layer.borderWidth = 1;
+    _twentyTwoPercentButton.layer.borderColor = [UIColor blackColor].CGColor;
 }
 - (IBAction)didTapFifteen:(id)sender {
     NSLog(@"15");

@@ -13,6 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *tipControl;
+@property (weak, nonatomic) IBOutlet UILabel *billLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tipTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalTextLabel;
+
 
 @end
 
@@ -46,6 +50,10 @@
     double tip = tipPercentage * bill;
     double total = bill + tip;
     
+    self.billLabel.alpha = 0;
+    self.tipTextLabel.alpha = 0;
+    self.totalTextLabel.alpha = 0;
+    self.tipControl.alpha = 0;
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
     
@@ -91,29 +99,74 @@
     
     [UIView animateWithDuration:0.2 animations:^{
         self.billField.frame = CGRectMake(self.billField.frame.origin.x,
-                                          self.billField.frame.origin.y + 30,
+                                          self.billField.frame.origin.y - 320,
                                           self.billField.frame.size.width,
                                           self.billField.frame.size.height);
-        self.tipLabel.alpha = 0;
-    }];
-    
-    [UIView animateWithDuration:1 animations:^{
-        self.tipLabel.alpha = 0;
+        self.tipControl.frame = CGRectMake(self.tipControl.frame.origin.x,
+                                           self.tipControl.frame.origin.y - 320,
+                                           self.tipControl.frame.size.width,
+                                           self.tipControl.frame.size.height);
+        self.tipLabel.frame = CGRectMake(self.tipLabel.frame.origin.x,
+                                           self.tipLabel.frame.origin.y - 320,
+                                           self.tipLabel.frame.size.width,
+                                           self.tipLabel.frame.size.height);
+        self.totalLabel.frame = CGRectMake(self.totalLabel.frame.origin.x,
+                                           self.totalLabel.frame.origin.y - 320,
+                                           self.totalLabel.frame.size.width,
+                                           self.totalLabel.frame.size.height);
+        self.billLabel.frame = CGRectMake(self.billLabel.frame.origin.x,
+                                           self.billLabel.frame.origin.y - 320,
+                                           self.billLabel.frame.size.width,
+                                           self.billLabel.frame.size.height);
+        self.tipTextLabel.frame = CGRectMake(self.tipTextLabel.frame.origin.x,
+                                         self.tipTextLabel.frame.origin.y - 320,
+                                         self.tipTextLabel.frame.size.width,
+                                         self.tipTextLabel.frame.size.height);
+        self.totalTextLabel.frame = CGRectMake(self.totalTextLabel.frame.origin.x,
+                                           self.totalTextLabel.frame.origin.y - 320,
+                                           self.totalTextLabel.frame.size.width,
+                                           self.totalTextLabel.frame.size.height);
+        
+        self.billLabel.alpha = 1;
+        self.tipTextLabel.alpha = 1;
+        self.totalTextLabel.alpha = 1;
+        self.tipControl.alpha = 1;
     }];
 }
 
 - (IBAction)onEditingEnd:(id)sender {
-    CGRect newFrame = self.billField.frame;
-    newFrame.origin.y -= 30;
+    CGRect billFieldNewFrame = self.billField.frame;
+    CGRect tipControlNewFrame = self.tipControl.frame;
+    CGRect tipNewFrame = self.tipLabel.frame;
+    CGRect totalNewFrame = self.totalLabel.frame;
+    CGRect billLabelFrame = self.billLabel.frame;
+    CGRect tipTextLabelFrame = self.tipTextLabel.frame;
+    CGRect totalTextLabelFrame = self.totalTextLabel.frame;
+    
+    billFieldNewFrame.origin.y += 320;
+    tipControlNewFrame.origin.y += 320;
+    tipNewFrame.origin.y += 320;
+    totalNewFrame.origin.y += 320;
+    billLabelFrame.origin.y += 320;
+    tipTextLabelFrame.origin.y += 320;
+    totalTextLabelFrame.origin.y += 320;
     
     [UIView animateWithDuration:0.2 animations:^{
-        self.billField.frame = newFrame;
+        self.billField.frame = billFieldNewFrame;
+        self.tipControl.frame = tipControlNewFrame;
+        self.tipLabel.frame = tipNewFrame;
+        self.totalLabel.frame = totalNewFrame;
+        self.billLabel.frame = billLabelFrame;
+        self.tipTextLabel.frame = tipTextLabelFrame;
+        self.totalTextLabel.frame = totalTextLabelFrame;
     }];
     
-    [UIView animateWithDuration:1 animations:^{
-        self.tipLabel.alpha = 1;
+    [UIView animateWithDuration:0.2 animations:^{
+        self.billLabel.alpha = 0;
+        self.tipTextLabel.alpha = 0;
+        self.totalTextLabel.alpha = 0;
+        self.tipControl.alpha = 0;
     }];
-    
 }
 
 @end
