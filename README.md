@@ -4,7 +4,7 @@
 
 Submitted by: **Miguel Batilando**
 
-Time spent: **1.5** hours spent in total
+Time spent: **4** hours spent in total
 
 ## User Stories
 
@@ -14,10 +14,10 @@ The following **required** functionality is complete:
 
 The following **optional** features are implemented:
 * [x] Settings page to change the default tip percentage.
-* [ ] UI animations
+* [x] UI animations
 * [ ] Remembering the bill amount across app restarts (if <10mins)
 * [ ] Using locale-specific currency and currency thousands separators.
-* [ ] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
+* [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
 
@@ -33,7 +33,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Creating a fun UI.
+Remembering the bill amount across app restarts (if <10mins). Didn't complete.
+Using locale-specific currency and currency thousands separators. Didn't complete.
 
 ## Credits
 
@@ -43,7 +45,7 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright 2019 Miguel Batilando
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
