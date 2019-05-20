@@ -26,7 +26,7 @@
     [super viewDidLoad];
     
     self.title = @"Tipster";
-    // Do any additional setup after loading the view.
+    [_billField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
