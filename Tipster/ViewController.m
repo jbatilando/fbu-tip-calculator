@@ -27,6 +27,17 @@
     
     self.title = @"Tipster";
     [_billField becomeFirstResponder];
+    
+    // Restore last session
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    int lastSessionTime = [defaults integerForKey:@"lastCalculationTime"];
+    int currentTime = [[NSDate date] timeIntervalSince1970];
+//    NSLog(@"lastSessionTime = %i", lastSessionTime);
+//    NSLog(@"currentTime = %f", currentTime);
+    int timeSinceLast = currentTime - lastSessionTime;
+    if (timeSinceLast < 600) {
+        // Set bill to default
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,29 +68,29 @@
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
     
-    NSLog(@"View will appear");
+//    NSLog(@"View will appear");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    NSLog(@"View did appear");
+//    NSLog(@"View did appear");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    NSLog(@"View will disappear");
+//    NSLog(@"View will disappear");
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    NSLog(@"View did disappear");
+//    NSLog(@"View did disappear");
 }
 
 - (IBAction)onTap:(id)sender {
-    NSLog(@"Hello");
+//    NSLog(@"Hello");
     [self.view endEditing:(YES)];
 }
 
@@ -93,6 +104,11 @@
     
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    int currentTime = [[NSDate date] timeIntervalSince1970];
+    [defaults setInteger:currentTime forKey:(@"lastCalculationTime")];
+    [defaults synchronize];
 }
 
 - (IBAction)onEditingBegin:(id)sender {
