@@ -9,6 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
+// MARK: IBOutlets
 @property (weak, nonatomic) IBOutlet UITextField *billField;
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
@@ -16,8 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *billLabel;
 @property (weak, nonatomic) IBOutlet UILabel *tipTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalTextLabel;
-
-
 @end
 
 @implementation ViewController
@@ -26,23 +25,15 @@
     [super viewDidLoad];
     
     self.title = @"Tipster";
-    [_billField becomeFirstResponder];
-    
-    // Restore last session
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int lastSessionTime = [defaults integerForKey:@"lastCalculationTime"];
-    int currentTime = [[NSDate date] timeIntervalSince1970];
-//    NSLog(@"lastSessionTime = %i", lastSessionTime);
-//    NSLog(@"currentTime = %f", currentTime);
-    int timeSinceLast = currentTime - lastSessionTime;
-    if (timeSinceLast < 600) {
-        // Set bill to default
-    }
+
+    // Make billField be the first responder so the user doesn't have to tap it
+    [self.billField becomeFirstResponder];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    // Retrieve set default tip percentage
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     double doubleValue = [defaults doubleForKey:@"default_tip_percentage"];
     
@@ -54,66 +45,65 @@
         self.tipControl.selectedSegmentIndex = 2;
     }
     
+    // Bill amount that user inputs
     double bill = [self.billField.text doubleValue];
-    NSArray *percentages = @[@(0.15), @(0.20), @(0.22)];
     
+    // Get tip percentage from segmented control
+    // Calculate tip and total
+    NSArray *percentages = @[@(0.15), @(0.20), @(0.22)];
     double tipPercentage = [percentages[self.tipControl.selectedSegmentIndex] doubleValue];
     double tip = tipPercentage * bill;
     double total = bill + tip;
     
+    // Make text labels invisible
     self.billLabel.alpha = 0;
     self.tipTextLabel.alpha = 0;
     self.totalTextLabel.alpha = 0;
     self.tipControl.alpha = 0;
+    
+    // Set tip and total label
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
-    
-//    NSLog(@"View will appear");
 }
 
+// MARK: Lifecycle methods
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
-//    NSLog(@"View did appear");
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-//    NSLog(@"View will disappear");
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
-//    NSLog(@"View did disappear");
 }
 
+// MARK: IBactions
+// Dismiss keyboard when user clicks outside billField, using tap gesture
 - (IBAction)onTap:(id)sender {
-//    NSLog(@"Hello");
     [self.view endEditing:(YES)];
 }
 
 - (IBAction)onEdit:(id)sender {
+    // Get bill amount from text field
     double bill = [self.billField.text doubleValue];
-    NSArray *percentages = @[@(0.15), @(0.20), @(0.22)];
     
+    // Calculate tip and total
+    NSArray *percentages = @[@(0.15), @(0.20), @(0.22)];
     double tipPercentage = [percentages[self.tipControl.selectedSegmentIndex] doubleValue];
     double tip = tipPercentage * bill;
     double total = bill + tip;
     
+    // Set tip and total label
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int currentTime = [[NSDate date] timeIntervalSince1970];
-    [defaults setInteger:currentTime forKey:(@"lastCalculationTime")];
-    [defaults synchronize];
 }
 
+// When billField is being edited, create animations
 - (IBAction)onEditingBegin:(id)sender {
-    
     [UIView animateWithDuration:0.2 animations:^{
+        // Move frames
         self.billField.frame = CGRectMake(self.billField.frame.origin.x,
                                           self.billField.frame.origin.y - 320,
                                           self.billField.frame.size.width,
@@ -143,6 +133,7 @@
                                            self.totalTextLabel.frame.size.width,
                                            self.totalTextLabel.frame.size.height);
         
+        // Make labels visible
         self.billLabel.alpha = 1;
         self.tipTextLabel.alpha = 1;
         self.totalTextLabel.alpha = 1;
@@ -150,7 +141,9 @@
     }];
 }
 
+// When billField is not being edited, create animations
 - (IBAction)onEditingEnd:(id)sender {
+    // Move frames
     CGRect billFieldNewFrame = self.billField.frame;
     CGRect tipControlNewFrame = self.tipControl.frame;
     CGRect tipNewFrame = self.tipLabel.frame;
@@ -177,6 +170,7 @@
         self.totalTextLabel.frame = totalTextLabelFrame;
     }];
     
+    // Make labels invisible
     [UIView animateWithDuration:0.2 animations:^{
         self.billLabel.alpha = 0;
         self.tipTextLabel.alpha = 0;
