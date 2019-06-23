@@ -25,6 +25,11 @@
     [super viewDidLoad];
     
     self.title = @"Tipster";
+    
+    // key & comment (arguments)
+    // at runtime, the macro returns the value for the key in the localization that corresponds with user's preferred language
+    self.billLabel.text = NSLocalizedString(@"Bill", "Label for the bill amount");
+    self.tipLabel.text = NSLocalizedString(@"tipLabel", "Label for tip");
 
     // Make billField be the first responder so the user doesn't have to tap it
     [self.billField becomeFirstResponder];
@@ -60,6 +65,27 @@
     self.tipTextLabel.alpha = 0;
     self.totalTextLabel.alpha = 0;
     self.tipControl.alpha = 0;
+    
+    NSDate *saveDate = [defaults objectForKey:@"updated_at"];
+    NSDate *dateNow = [NSDate date];
+    NSTimeInterval timeDifference = [dateNow timeIntervalSinceDate:saveDate];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
+    
+    // If it has been less than 10 minutes, show the saved state
+    if (timeDifference < 600) {
+        self.billField.text = [defaults objectForKey:@"bill_amount"];
+        self.tipTextLabel.text = [defaults objectForKey:@"tip_amount"];;
+        self.totalLabel.text = [defaults objectForKey:@"total_amount"];
+    } else {
+        // If it has been more than 10 minutes, clear the state
+        // Returns a dictionary that contains a union of all key-value pairs in the domains in the search list
+        NSDictionary *dict = [defaults dictionaryRepresentation];
+        for (id key in dict) {
+            [defaults removeObjectForKey:key];
+        }
+        [defaults synchronize];
+    }
     
     // Set tip and total label
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
@@ -98,6 +124,29 @@
     // Set tip and total label
     self.tipLabel.text = [NSString stringWithFormat: @"$%.2f", tip];
     self.totalLabel.text = [NSString stringWithFormat: @"$%.2f", total];
+    
+    // Save last input
+    [self saveData:self.billField.text :@"bill_amount"];
+    [self saveData:[NSString stringWithFormat: @"$%.2f", tip] :@"tip_amount"];
+    [self saveData:[NSString stringWithFormat: @"$%.2f", total] :@"total_amount"];
+}
+
+// MARK: Methods
+- (void)saveData:(NSString *)string :(NSString *)key {
+    // Save the information to NSUserDefaults to retrieve later
+    // NSUserDefaults: an interface to the user's default database, where you store key-value pairs consistently across launches of your app
+    
+    // Returns the shared defaults object
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Set the value of the specified default key to the double value
+    [defaults setObject:string forKey:key];
+    
+    NSDate *saveDate = [NSDate date];
+    [defaults setObject:saveDate forKey:@"updated_at"];
+    
+    // UserDefaults automatically and periodically synchronizes, but to manually flush the keys and values to disk, synchronize is called to guarantee that updates are saved
+    [defaults synchronize];
 }
 
 // When billField is being edited, create animations
