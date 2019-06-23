@@ -33,15 +33,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Creating a fun UI.
-
-Remembering the bill amount across app restarts (if <10mins). Didn't complete.
-
-Using locale-specific currency and currency thousands separators. Didn't complete.
-
 ## Credits
-
-List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 ## License
 
